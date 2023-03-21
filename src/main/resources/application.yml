@@ -1,1 +1,22 @@
+spring:
+  h2:
+    console:
+      enabled: true
+    datasource:
+      driver-class-name: org.h2.Driver
+      url: jdbc:h2:mem:testdb
+      username: sa
+      password:
+  datasource:
+    generate-unique-name: false
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      format_sql: true
+    open-in-view: false
 
+kakao:
+  url: http://dapi.kakao.com
+  token: 8040db9cc06d01359482abe9c19fbe91
