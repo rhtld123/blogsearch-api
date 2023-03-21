@@ -4,6 +4,7 @@ import com.example.blogsearch.modules.blogsearch.adapter.out.persistence.reposit
 import com.example.blogsearch.modules.blogsearch.application.port.out.GetBlogPopularSearchKeywordPort;
 import com.example.blogsearch.modules.blogsearch.application.port.out.model.BlogPopularSearchKeyword;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,6 @@ public class BlogSearchRequestPersistenceQueryAdapter implements GetBlogPopularS
 
     @Override
     public List<BlogPopularSearchKeyword> getBlogPopularSearchKeywordPort() {
-        return blogSearchRequestRepository.findBlogPopularSearchKeywords();
+        return blogSearchRequestRepository.findBlogPopularSearchKeywords(PageRequest.of(0, 10));
     }
 }
