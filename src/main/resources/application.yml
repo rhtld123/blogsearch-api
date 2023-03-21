@@ -24,14 +24,3 @@ naver:
   url: https://openapi.naver.com
   client_id: DU2JipZvVjs5mpObEZRz
   client_secret: HsWJPtAiAC
-
-
-feign:
-  client:
-    config:
-      kakaoBlogSearchClient:
-        connectTimeout: 2000
-        readTimeout: 5000
-      naverBlogSearchClient:
-        connectTimeout: 2000
-          readTimeout: 5000
