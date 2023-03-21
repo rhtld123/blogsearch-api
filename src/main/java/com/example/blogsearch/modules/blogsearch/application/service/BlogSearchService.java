@@ -56,13 +56,13 @@ public class BlogSearchService implements BlogSearchUseCase {
         if (response instanceof BlogSearchNaverResponse) {
             BlogSearchNaverResponse naverResponse = (BlogSearchNaverResponse) response;
             List<BlogSearchNaverResponse.items> items = naverResponse.getItems();
-            return BlogSearchResponse.of(naverResponse.getTotal(), naverResponse.getDisplay().intValue(), convertItemsToContents(items), "NAVER");
+            return BlogSearchResponse.of(naverResponse.getTotal(), naverResponse.getDisplay().intValue(), convertItemsToContents(items), BlogSearchPlatform.NAVER);
         }
 
         BlogSearchKakaoResponse kakaoResponse = (BlogSearchKakaoResponse) response;
         BlogSearchKakaoResponse.Meta meta = kakaoResponse.getMeta();
         List<BlogSearchKakaoResponse.Documents> documents = kakaoResponse.getDocuments();
-        return BlogSearchResponse.of(meta.getTotalCount(), documents.size(), convertDocumentsToContents(documents), "KAKAO");
+        return BlogSearchResponse.of(meta.getTotalCount(), documents.size(), convertDocumentsToContents(documents), BlogSearchPlatform.KAKAO);
     }
 
     private List<BlogSearchResponse.BlogNaverContent> convertItemsToContents(List<BlogSearchNaverResponse.items> items) {

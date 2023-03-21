@@ -14,16 +14,16 @@ public class BlogSearchResponse<T> {
     private Long totalCount;
     private int numberOfElements;
     private List<T> contents;
-    private String searchPlatform;
+    private BlogSearchPlatform searchPlatform;
 
-    private BlogSearchResponse(Long totalCount, int numberOfElements, List<T> contents, String searchPlatform) {
+    private BlogSearchResponse(Long totalCount, int numberOfElements, List<T> contents, BlogSearchPlatform searchPlatform) {
         this.totalCount = totalCount;
         this.numberOfElements = numberOfElements;
         this.contents = contents;
         this.searchPlatform = searchPlatform;
     }
 
-    public static <T> BlogSearchResponse<T> of(Long totalCount, int numberOfElements, List<T> contents, String searchPlatform) {
+    public static <T> BlogSearchResponse<T> of(Long totalCount, int numberOfElements, List<T> contents, BlogSearchPlatform searchPlatform) {
         return new BlogSearchResponse(totalCount, numberOfElements, contents, searchPlatform);
     }
 
