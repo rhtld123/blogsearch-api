@@ -8,19 +8,21 @@ import java.util.List;
 @Getter
 public class BlogSearchResponse {
     private int totalCount;
+    private int numberOfElements;
     private int pageableCount;
     private boolean isEnd;
     private List<BlogContent> contents;
 
-    private BlogSearchResponse(int totalCount, int pageableCount, boolean isEnd, List<BlogContent> contents) {
+    private BlogSearchResponse(int totalCount, int numberOfElements, int pageableCount, boolean isEnd, List<BlogContent> contents) {
         this.totalCount = totalCount;
+        this.numberOfElements = numberOfElements;
         this.pageableCount = pageableCount;
         this.isEnd = isEnd;
         this.contents = contents;
     }
 
-    public static BlogSearchResponse of(int totalCount, int pageableCount, boolean isEnd, List<BlogContent> contents) {
-        return new BlogSearchResponse(totalCount, pageableCount, isEnd, contents);
+    public static BlogSearchResponse of(int totalCount, int numberOfElements, int pageableCount, boolean isEnd, List<BlogContent> contents) {
+        return new BlogSearchResponse(totalCount, numberOfElements, pageableCount, isEnd, contents);
     }
 
     @Getter

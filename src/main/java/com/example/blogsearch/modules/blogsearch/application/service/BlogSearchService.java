@@ -1,9 +1,11 @@
 package com.example.blogsearch.modules.blogsearch.application.service;
 
+import com.example.blogsearch.modules.blogsearch.adapter.out.persistence.entity.BlogSearchRequestEntity;
 import com.example.blogsearch.modules.blogsearch.application.port.in.BlogSearchUseCase;
 import com.example.blogsearch.modules.blogsearch.application.port.in.model.BlogSearchCommand;
 import com.example.blogsearch.modules.blogsearch.application.port.in.model.BlogSearchResponse;
 import com.example.blogsearch.modules.blogsearch.application.port.out.BlogSearchKakaoPort;
+import com.example.blogsearch.modules.blogsearch.application.port.out.SaveBlogSearchRequestPort;
 import com.example.blogsearch.modules.blogsearch.application.port.out.model.BlogSearchKakaoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,13 +22,19 @@ import java.util.stream.Collectors;
 public class BlogSearchService implements BlogSearchUseCase {
 
     private final BlogSearchKakaoPort blogSearchKakaoPort;
+    private final SaveBlogSearchRequestPort saveBlogSearchRequestPort;
 
     @Override
     public BlogSearchResponse search(BlogSearchCommand blogSearchCommand) {
         BlogSearchKakaoResponse response = blogSearchKakaoPort.search(blogSearchCommand.getKeyword(), blogSearchCommand.getSort().name(), blogSearchCommand.getPage(), blogSearchCommand.getSize());
+        saveBlogSearchRequestPort.save(BlogSearchRequestEntity.from(blogSearchCommand.getKeyword()));
+        return createResponse(response);
+    }
+
+    private BlogSearchResponse createResponse(BlogSearchKakaoResponse response) {
         BlogSearchKakaoResponse.Meta meta = response.getMeta();
         List<BlogSearchKakaoResponse.Documents> documents = response.getDocuments();
-        return BlogSearchResponse.of(meta.getTotalCount(), meta.getPageableCount(), meta.isEnd(), convertDocumentsToContents(documents));
+        return BlogSearchResponse.of(meta.getTotalCount(), documents.size(), meta.getPageableCount(), meta.isEnd(), convertDocumentsToContents(documents));
     }
 
     private List<BlogSearchResponse.BlogContent> convertDocumentsToContents(List<BlogSearchKakaoResponse.Documents> documents) {
