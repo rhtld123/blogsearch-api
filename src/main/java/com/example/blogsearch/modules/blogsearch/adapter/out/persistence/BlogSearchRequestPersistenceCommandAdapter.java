@@ -15,7 +15,7 @@ public class BlogSearchRequestPersistenceCommandAdapter implements SaveBlogSearc
     private final BlogSearchRequestRepository blogSearchRequestRepository;
 
     @Override
-    public void save(BlogSearchRequestEntity entity) {
-        blogSearchRequestRepository.save(entity);
+    public BlogSearchRequestEntity save(BlogSearchRequestEntity entity) {
+        return blogSearchRequestRepository.save(entity);
     }
 }
