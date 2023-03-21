@@ -20,3 +20,13 @@ spring:
 kakao:
   url: http://dapi.kakao.com
   token: 8040db9cc06d01359482abe9c19fbe91
+
+feign:
+  client:
+    config:
+      kakaoBlogSearchClient:
+        connectTimeout: 2000
+        readTimeout: 5000
+      naverBlogSearchClient:
+        connectTimeout: 2000
+          readTimeout: 5000
