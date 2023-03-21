@@ -28,19 +28,19 @@ public class BlogSearchKakaoResponse {
     @NoArgsConstructor
     public static class Meta {
         @JsonProperty("total_count")
-        private int totalCount;
+        private Long totalCount;
         @JsonProperty("pageable_count")
-        private int pageableCount;
+        private Long pageableCount;
         @JsonProperty("is_end")
         private boolean isEnd;
 
-        private Meta(int totalCount, int pageableCount, boolean isEnd) {
+        private Meta(Long totalCount, Long pageableCount, boolean isEnd) {
             this.totalCount = totalCount;
             this.pageableCount = pageableCount;
             this.isEnd = isEnd;
         }
 
-        public static Meta of(int totalCount, int pageableCount, boolean isEnd) {
+        public static Meta of(Long totalCount, Long pageableCount, boolean isEnd) {
             return new Meta(totalCount, pageableCount, isEnd);
         }
     }

@@ -4,17 +4,14 @@ import com.example.blogsearch.infrastructure.common.entity.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Entity
 @Table(
         name = "blog_search_requests",
         indexes = {
-            @Index(name = "index_blog_search_requests_keyword", columnList = "keyword")
+                @Index(name = "index_blog_search_requests_keyword", columnList = "keyword")
         }
 )
 @NoArgsConstructor
@@ -23,11 +20,16 @@ public class BlogSearchRequestEntity extends BaseEntity {
     @Column(name = "keyword", nullable = false)
     private String keyword;
 
-    private BlogSearchRequestEntity(String keyword) {
+    @Column(name = "platform", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Platform platform;
+
+    private BlogSearchRequestEntity(String keyword, Platform platform) {
         this.keyword = keyword;
+        this.platform = platform;
     }
 
-    public static BlogSearchRequestEntity from(String keyword) {
-        return new BlogSearchRequestEntity(keyword);
+    public static BlogSearchRequestEntity of(String keyword, Platform platform) {
+        return new BlogSearchRequestEntity(keyword, platform);
     }
 }

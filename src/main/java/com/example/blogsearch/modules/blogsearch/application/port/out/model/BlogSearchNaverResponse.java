@@ -19,7 +19,7 @@ public class BlogSearchNaverResponse {
     @JsonProperty("display")
     private Long display;
     @JsonProperty("items")
-    private List<items> documents;
+    private List<items> items;
 
     @Getter
     @NoArgsConstructor
