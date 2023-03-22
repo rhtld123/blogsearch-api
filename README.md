@@ -26,8 +26,8 @@
   "numberOfElements": 2,
   "contents": [
     {
-      "title": "",
-      "contents": "​",
+      "title": "",
+      "contents": "",
       "url": "",
       "blogName": "",
       "thumbnail": "",
