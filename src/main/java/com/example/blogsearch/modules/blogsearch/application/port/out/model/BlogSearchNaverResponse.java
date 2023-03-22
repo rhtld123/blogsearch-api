@@ -19,11 +19,23 @@ public class BlogSearchNaverResponse {
     @JsonProperty("display")
     private Long display;
     @JsonProperty("items")
-    private List<items> items;
+    private List<item> items;
+
+    private BlogSearchNaverResponse(String lastBuildDate, Long total, Long start, Long display, List<item> items) {
+        this.lastBuildDate = lastBuildDate;
+        this.total = total;
+        this.start = start;
+        this.display = display;
+        this.items = items;
+    }
+
+    public static BlogSearchNaverResponse of(String lastBuildDate, Long total, Long start, Long display, List<item> item) {
+        return new BlogSearchNaverResponse(lastBuildDate, total, start, display, item);
+    }
 
     @Getter
     @NoArgsConstructor
-    public static class items {
+    public static class item {
         @JsonProperty("title")
         private String title;
         @JsonProperty("link")
@@ -36,5 +48,18 @@ public class BlogSearchNaverResponse {
         private String bloggerlink;
         @JsonProperty("postdate")
         private String postdate;
+
+        private item(String title, String link, String description, String bloggername, String bloggerlink, String postdate) {
+            this.title = title;
+            this.link = link;
+            this.description = description;
+            this.bloggername = bloggername;
+            this.bloggerlink = bloggerlink;
+            this.postdate = postdate;
+        }
+
+        public static item of(String title, String link, String description, String bloggername, String bloggerlink, String postdate) {
+            return new item(title, link, description, bloggername, bloggerlink, postdate);
+        }
     }
 }

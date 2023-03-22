@@ -55,8 +55,8 @@ public class BlogSearchService implements BlogSearchUseCase {
     private BlogSearchResponse createResponse(Object response) {
         if (response instanceof BlogSearchNaverResponse) {
             BlogSearchNaverResponse naverResponse = (BlogSearchNaverResponse) response;
-            List<BlogSearchNaverResponse.items> items = naverResponse.getItems();
-            return BlogSearchResponse.of(naverResponse.getTotal(), naverResponse.getDisplay().intValue(), convertItemsToContents(items), BlogSearchPlatform.NAVER);
+            List<BlogSearchNaverResponse.item> item = naverResponse.getItems();
+            return BlogSearchResponse.of(naverResponse.getTotal(), naverResponse.getDisplay().intValue(), convertItemsToContents(item), BlogSearchPlatform.NAVER);
         }
 
         BlogSearchKakaoResponse kakaoResponse = (BlogSearchKakaoResponse) response;
@@ -65,7 +65,7 @@ public class BlogSearchService implements BlogSearchUseCase {
         return BlogSearchResponse.of(meta.getTotalCount(), documents.size(), convertDocumentsToContents(documents), BlogSearchPlatform.KAKAO);
     }
 
-    private List<BlogSearchResponse.BlogNaverContent> convertItemsToContents(List<BlogSearchNaverResponse.items> items) {
+    private List<BlogSearchResponse.BlogNaverContent> convertItemsToContents(List<BlogSearchNaverResponse.item> items) {
         return items.stream().map(item -> BlogSearchResponse.BlogNaverContent.of(item.getTitle(), item.getLink(), item.getDescription(), item.getBloggername(), item.getBloggerlink(), item.getPostdate())).collect(Collectors.toList());
     }
 
