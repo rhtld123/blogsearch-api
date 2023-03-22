@@ -50,7 +50,11 @@ public class BlogSearchResponse<T> {
         }
 
         private LocalDateTime convertDatetime(String datetime) {
-            return LocalDateTime.from(Instant.from(DateTimeFormatter.ISO_DATE_TIME.parse(datetime)).atZone(ZoneId.of("Asia/Seoul")));
+            try {
+                return LocalDateTime.from(Instant.from(DateTimeFormatter.ISO_DATE_TIME.parse(datetime)).atZone(ZoneId.of("Asia/Seoul")));
+            } catch (Exception e) {
+                return null;
+            }
         }
 
     }
@@ -78,10 +82,14 @@ public class BlogSearchResponse<T> {
         }
 
         private LocalDate convertDate(String datetime) {
-            int year = Integer.parseInt(datetime.substring(0, 4));
-            int month = Integer.parseInt(datetime.substring(4, 6));
-            int day = Integer.parseInt(datetime.substring(6, 8));
-            return LocalDate.of(year, month, day);
+            try {
+                int year = Integer.parseInt(datetime.substring(0, 4));
+                int month = Integer.parseInt(datetime.substring(4, 6));
+                int day = Integer.parseInt(datetime.substring(6, 8));
+                return LocalDate.of(year, month, day);
+            } catch (Exception e) {
+                return null;
+            }
         }
     }
 }
