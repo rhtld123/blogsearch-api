@@ -26,7 +26,7 @@ public class BlogSearchController {
 
     @GetMapping("")
     public ResponseEntity<BlogSearchResponse> searchBlog(@RequestParam(value = "keyword") String keyword,
-                                                         @RequestParam(value = "sort", required = false) BlogSearchSort sort,
+                                                         @RequestParam(value = "sort", required = false) String sort,
                                                          @RequestParam(value = "page", required = false) @Min(value = 1, message = "Page는 1 이상이어야 합니다.") @Max(value = 50, message = "Page는 50 이하의 값이여야 합니다.") Integer page,
                                                          @RequestParam(value = "size", required = false) @Min(value = 1, message = "Size는 1 이상이어야 합니다.") @Max(value = 50, message = "Size는 50 이하의 값이어야 합니다.") Integer size,
                                                          @RequestParam(value = "platform", required = false) BlogSearchPlatform platform) {
