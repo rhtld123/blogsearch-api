@@ -1,11 +1,13 @@
 package com.example.blogsearch.infrastructure.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.client.HttpStatusCodeException;
 
-public abstract class BlogSearchException extends HttpStatusCodeException {
+public abstract class BlogSearchException extends RuntimeException {
 
-    public BlogSearchException(HttpStatus statusCode, String statusText) {
-        super(statusCode, statusText);
+    private final HttpStatus httpStatus;
+
+    public BlogSearchException(String message, HttpStatus httpStatus) {
+        super(message);
+        this.httpStatus = httpStatus;
     }
 }
