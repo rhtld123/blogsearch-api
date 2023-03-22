@@ -23,7 +23,7 @@ public class CommonExceptionHandler {
 
     @ExceptionHandler(BlogSearchException.class)
     public ResponseEntity<?> blogSearchException(BlogSearchException e, HttpServletRequest request) {
-        return ResponseEntity.status(e.getStatusCode())
+        return ResponseEntity.status(e.getHttpStatus())
                 .body(new ErrorResponse(e.getMessage(), request.getRequestURI(), request.getMethod()));
     }
 
