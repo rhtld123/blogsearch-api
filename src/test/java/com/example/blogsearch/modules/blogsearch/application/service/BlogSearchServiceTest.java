@@ -40,13 +40,21 @@ public class BlogSearchServiceTest {
     SaveBlogSearchRequestPort saveBlogSearchRequestPort;
 
     @Test
+    void 네이버로_요청_했을_때_illegalArgumentException() {
+        //given
+        //when
+        //then
+        assertThrows(IllegalArgumentException.class, () -> blogSearchService.search(BlogSearchCommand.of("kakao", "ACCURACY", 1, 10, "NAVER")));
+    }
+
+    @Test
     void 카카오로_검색_실패_네이버로도_검색_실패시() {
         //given
         when(blogSearchKakaoPort.search(anyString(), any(), anyInt(), anyInt())).thenThrow(new HttpRequestFailException(HttpStatus.INTERNAL_SERVER_ERROR, "message"));
         when(blogSearchNaverPort.search(anyString(), any(), anyInt(), anyInt())).thenThrow(new HttpRequestFailException(HttpStatus.INTERNAL_SERVER_ERROR, "message"));
         //when
         //then
-        assertThrows(HttpRequestFailException.class, () -> blogSearchService.search(BlogSearchCommand.of("카카오", "ACCURACY", 1, 10, BlogSearchPlatform.KAKAO)));
+        assertThrows(HttpRequestFailException.class, () -> blogSearchService.search(BlogSearchCommand.of("카카오", "ACCURACY", 1, 10, "KAKAO")));
         verify(blogSearchKakaoPort, times(1)).search(anyString(), anyString(), anyInt(), anyInt());
         verify(blogSearchNaverPort, times(1)).search(anyString(), anyString(), anyInt(), anyInt());
     }
@@ -58,7 +66,7 @@ public class BlogSearchServiceTest {
         when(blogSearchNaverPort.search(anyString(), any(), anyInt(), anyInt())).thenReturn(createNaverResponse());
         when(saveBlogSearchRequestPort.save(any())).thenReturn(BlogSearchRequestEntity.of("카카오", Platform.NAVER));
         //when
-        BlogSearchResponse response = blogSearchService.search(BlogSearchCommand.of("카카오", "ACCURACY", 1, 10, BlogSearchPlatform.KAKAO));
+        BlogSearchResponse response = blogSearchService.search(BlogSearchCommand.of("카카오", "ACCURACY", 1, 10, "KAKAO"));
         //then
         assertEquals(100L, response.getTotalCount());
         assertEquals(BlogSearchPlatform.NAVER, response.getSearchPlatform());
@@ -75,7 +83,7 @@ public class BlogSearchServiceTest {
         when(blogSearchKakaoPort.search(anyString(), any(), anyInt(), anyInt())).thenReturn(createKakaoResponse());
         when(saveBlogSearchRequestPort.save(any())).thenReturn(BlogSearchRequestEntity.of("카카오", Platform.KAKAO));
         //when
-        BlogSearchResponse response = blogSearchService.search(BlogSearchCommand.of("카카오", "ACCURACY", 1, 10, BlogSearchPlatform.KAKAO));
+        BlogSearchResponse response = blogSearchService.search(BlogSearchCommand.of("카카오", "ACCURACY", 1, 10, "KAKAO"));
         //then
         assertEquals(100L, response.getTotalCount());
         assertEquals(BlogSearchPlatform.KAKAO, response.getSearchPlatform());
