@@ -145,6 +145,39 @@ class BlogSearchControllerTest {
     }
 
     @Test
+    void sort_이상한_값_입력_시_400() throws Exception {
+        //given
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/search/blog")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("keyword", "카카오")
+                        .param("sort", "잘못정렬")
+                        .param("page", "1")
+                        .param("size", "10")
+                        .param("platform", "NAVER"))
+                .andDo(print())
+                //then
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("올바른 정렬 방식이 아닙니다."));
+    }
+
+    @Test
+    void platform_이상한_값_입력_시_400() throws Exception {
+        //given
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/search/blog")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("keyword", "카카오")
+                        .param("page", "1")
+                        .param("size", "10")
+                        .param("platform", "NETMARBLE"))
+                .andDo(print())
+                //then
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("지원하는 플랫폼이 아닙니다."));
+    }
+
+    @Test
     void 카카오_실패_네이버_실패() throws Exception {
         //given
         when(kakaoApiFeignClient.searchBlog(anyString(), anyString(), anyString(), anyInt(), anyInt())).thenThrow(new HttpRequestFailException(HttpStatus.INTERNAL_SERVER_ERROR, "message"));

@@ -19,11 +19,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
@@ -89,6 +89,23 @@ public class BlogSearchServiceTest {
         assertEquals(BlogSearchPlatform.KAKAO, response.getSearchPlatform());
         assertEquals(10L, response.getNumberOfElements());
         assertEquals(10, response.getContents().size());
+        verify(blogSearchKakaoPort, times(1)).search(anyString(), anyString(), anyInt(), anyInt());
+        verify(saveBlogSearchRequestPort, times(1)).save(any());
+    }
+
+    @Test
+    void 카카오_검색_결과가_없을_때_데이터_저장() {
+        //given
+        BlogSearchKakaoResponse.Meta meta = BlogSearchKakaoResponse.Meta.of(0L, 0L, true);
+        when(blogSearchKakaoPort.search(anyString(), any(), anyInt(), anyInt())).thenReturn(BlogSearchKakaoResponse.of(meta, Collections.emptyList()));
+        when(saveBlogSearchRequestPort.save(any())).thenReturn(BlogSearchRequestEntity.of("카카오", Platform.KAKAO));
+        //when
+        BlogSearchResponse response = blogSearchService.search(BlogSearchCommand.of("카카오", "ACCURACY", 1, 10, "KAKAO"));
+        //then
+        assertEquals(0L, response.getTotalCount());
+        assertEquals(BlogSearchPlatform.KAKAO, response.getSearchPlatform());
+        assertEquals(0L, response.getNumberOfElements());
+        assertTrue(response.getContents().isEmpty());
         verify(blogSearchKakaoPort, times(1)).search(anyString(), anyString(), anyInt(), anyInt());
         verify(saveBlogSearchRequestPort, times(1)).save(any());
     }
