@@ -33,7 +33,7 @@ public class BlogSearchService implements BlogSearchUseCase {
     }
 
     private Object searchByPlatform(BlogSearchCommand blogSearchCommand) {
-        if (BlogSearchPlatform.NAVER == blogSearchCommand.getPlatform()) {
+        if (BlogSearchPlatform.KAKAO != blogSearchCommand.getPlatform()) {
             throw new IllegalArgumentException("지원하지 않는 검색 플랫폼 입니다.");
         }
         return searchKakaoOrElseNaver(blogSearchCommand.getKeyword(), blogSearchCommand.getSort().name(), blogSearchCommand.getPage(), blogSearchCommand.getSize());
