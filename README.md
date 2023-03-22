@@ -90,38 +90,6 @@
     {
       "count": 10,
       "keyword": "네이버"
-    },
-    {
-      "count": 1,
-      "keyword": "keyword9"
-    },
-    {
-      "count": 1,
-      "keyword": "keyword8"
-    },
-    {
-      "count": 1,
-      "keyword": "keyword7"
-    },
-    {
-      "count": 1,
-      "keyword": "keyword6"
-    },
-    {
-      "count": 1,
-      "keyword": "keyword5"
-    },
-    {
-      "count": 1,
-      "keyword": "keyword1"
-    },
-    {
-      "count": 1,
-      "keyword": "keyword3"
-    },
-    {
-      "count": 1,
-      "keyword": "keyword0"
     }
   ]
 }
