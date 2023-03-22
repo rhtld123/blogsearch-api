@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface NaverApiFeignClient {
 
     @GetMapping("/v1/search/blog.json")
-    public ResponseEntity<BlogSearchNaverResponse> search(@RequestHeader("X-Naver-Client-Id") String clientId,
+    ResponseEntity<BlogSearchNaverResponse> search(@RequestHeader("X-Naver-Client-Id") String clientId,
                                                           @RequestHeader("X-Naver-Client-Secret") String clientSecret,
                                                           @RequestParam("query") String query,
                                                           @RequestParam("display") int display,
