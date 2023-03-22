@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class KakaoAdapterTest {
@@ -36,6 +36,8 @@ class KakaoAdapterTest {
         //when
         BlogSearchKakaoResponse response = kakaoAdapter.search("keyword", "ACCURACY", 1, 10);
         //then
+        verify(kakaoApiFeignClient, times(1)).searchBlog(anyString(), anyString(), anyString(), anyInt(), anyInt());
+        verify(kakaoProperties,times(1)).getToken();
         BlogSearchKakaoResponse.Meta meta = response.getMeta();
         assertEquals(100L, meta.getTotalCount());
         assertEquals(10L, meta.getPageableCount());
