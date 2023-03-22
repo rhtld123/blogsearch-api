@@ -14,6 +14,6 @@ public class FeignErrorDecoder implements ErrorDecoder {
         String requestUrl = response.request().url();
         HttpStatus responseStatus = HttpStatus.valueOf(response.status());
         log.error("{} 호출 실패 : status = {}", requestUrl, responseStatus);
-        return new HttpRequestFailException("처리중 오류가 발생하였습니다.");
+        return new HttpRequestFailException(HttpStatus.INTERNAL_SERVER_ERROR, "처리중 오류가 발생하였습니다.");
     }
 }
